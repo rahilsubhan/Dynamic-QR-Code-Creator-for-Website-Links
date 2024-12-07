@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/public'));
 
 
+
 var url = '';
 app.get('/',(req,res)=>{
     res.sendFile(__dirname + "/index.html");
@@ -30,6 +31,17 @@ app.post('/submit',(req,res)=>{
       if (err) throw err;
       console.log('The file has been saved!');
     }); 
+});
+
+app.get('/download', (req, res) => {
+  // const filePath = path.join(__dirname, 'qr-img.png'); // File location
+
+  res.download(__dirname + '/qr-img.png', 'qr-img.png', (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('An error occurred while downloading the file.');
+    }
+  });
 });
 
 
